@@ -1,8 +1,8 @@
-import React,{memo} from "react";
+import React, { memo } from 'react';
 
 interface MenuSection {
   title: string;
-  items: string[] | CategoryItem[];
+  items: CategoryItem[];
   isCategory?: boolean; // Flag to indicate if it's a category section
 }
 
@@ -25,15 +25,8 @@ const Menu: React.FC<DropdownMenuProps> = ({ sections }) => {
           <div className="space-y-2">
             {section.isCategory ? (
               section.items.map((item: any, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center p-2 hover:bg-gray-100 rounded-lg"
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.label}
-                    className="w-10 h-10 rounded-full"
-                  />
+                <div key={idx} className="flex items-center p-2 hover:bg-gray-100 rounded-lg">
+                  <img src={item.imageUrl} alt={item.label} className="w-10 h-10 rounded-full" />
                   <div className="ml-2">
                     <p className="font-medium">{item.label}</p>
                     <p className="text-sm text-gray-500">{item.description}</p>
@@ -42,8 +35,8 @@ const Menu: React.FC<DropdownMenuProps> = ({ sections }) => {
               ))
             ) : (
               <ul className="space-y-2">
-                {section.items.map((item: string, idx) => (
-                  <li key={idx}>{item}</li>
+                {section.items.map((item, idx) => (
+                  <li key={idx}>{item.label}</li>
                 ))}
               </ul>
             )}
