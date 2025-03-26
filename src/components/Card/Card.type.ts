@@ -1,7 +1,6 @@
+import { BaseProduct } from '../../features/types/Products.type';
+
 export type ProductCartProps = {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  description?: string;
+  userId: string;
+  product: BaseProduct;
 };

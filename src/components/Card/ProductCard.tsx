@@ -6,33 +6,31 @@ import { FaStar } from 'react-icons/fa6';
 import { Button } from '../ui/button';
 import ShoppingCart from '../ui/Svgs/ShoppingCart';
 import { Card, CardDescription } from '../ui/card';
-import { BaseProduct } from '../../features/types/Products.type';
 import Heart from '../ui/Svgs/Heart';
-import { useAppSelector } from '../../../store';
+import { ProductCartProps } from './Card.type';
 
-const ProductCard: FC<BaseProduct> = (props) => {
-  const { id, name, image, price, description, size, wishlist, rating, review } = props;
-  const { user } = useAppSelector((state) => state.user);
+const ProductCard: FC<ProductCartProps> = (props) => {
+  const { id, name, image, price, description, size, wishlist, rating, review } = props.product;
 
   return (
     <Card
       key={id}
       className="bg-white p-4 rounded-lg shadow-md relative justify-between">
       <div className="absolute z-[1] top-6 right-6">
-        {wishlist?.includes(user.id + '') && (
+        {wishlist?.includes(props.userId + '') && (
           <FaHeart
             size={22}
             className="text-red-500 hover:border-red-500fill-current"
           />
         )}
 
-        {wishlist?.length === 0 || (!wishlist?.includes(user.id + '') && <Heart size={22} />)}
+        {wishlist?.length === 0 || (!wishlist?.includes(props.userId + '') && <Heart size={22} />)}
       </div>
 
       <div className="w-full h-[20rem]">
         <Image
           src={image}
-          layout="fill"
+          fill
           alt={name}
           className="rounded-md w-full h-full object-cover !relative"
         />
@@ -41,7 +39,7 @@ const ProductCard: FC<BaseProduct> = (props) => {
       <Card.Title>{name}</Card.Title>
 
       <Card.Content className="pl-0 flex flex-col gap-2">
-        <div className="flex items-center gap-2  w-fit px-2.5 py-1 text-sm bg-blue-100 rounded-3xl">
+        <div className="flex items-center gap-2  w-fit px-2.5 py-1 text-sm bg-blue-50 rounded-3xl">
           <span>{rating}</span>
           <FaStar className="text-sky-600" />
           <span className="text-sky-600 font-bold">344</span>
@@ -52,7 +50,7 @@ const ProductCard: FC<BaseProduct> = (props) => {
 
         <div>
           <p className="text-sm text-gray-700">
-            Size: {size} | {props?.brand}
+            Size: {size} | {props?.product.brand}
           </p>
 
           <p className="text-sm text-gray-700 flex items-center">
