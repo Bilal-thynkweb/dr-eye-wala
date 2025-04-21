@@ -19,7 +19,7 @@ interface DropdownMenuProps {
 
 const Menu: React.FC<DropdownMenuProps> = ({ sections }) => {
   return (
-    <div className="absolute left-0 top-full w-full bg-white shadow-md p-4 grid grid-cols-4 gap-4">
+    <div className="absolute z-1 top-[8rem] left-0 w-full bg-white shadow-md p-4 grid grid-cols-4 gap-4">
       {sections.map((section, index) => (
         <div
           key={index}
@@ -35,6 +35,7 @@ const Menu: React.FC<DropdownMenuProps> = ({ sections }) => {
                     className="flex items-center space-x-2">
                     <Image
                       width={100}
+                      height={100}
                       src={categoryItem.imageUrl}
                       alt={categoryItem.label}
                       className="w-8 h-8 rounded-full"

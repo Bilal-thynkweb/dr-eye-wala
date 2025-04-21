@@ -1,13 +1,15 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import Link from 'next/link';
-// import Menu from './menu/Menu';
+import Menu from './menu/Menu';
 
 const Submenu = () => {
-  // const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
 
-  // const handleMouseEnter = (menu: string) => setHoveredMenu(menu);
+  const handleMouseEnter = (menu: string) => setHoveredMenu(menu);
+
+  const handleMouseLeave = () => setHoveredMenu(null);
 
   const menuItems = [
     { name: 'EYEGLASSES' },
@@ -20,45 +22,45 @@ const Submenu = () => {
   ];
 
   // Menu data: this can be dynamic
-  // const dropdownSections = [
-  //   {
-  //     title: 'SELECT CATEGORY',
-  //     isCategory: true,
-  //     items: [
-  //       {
-  //         label: 'Men',
-  //         description: 'CLASSIC SUNGLASSES\nStarting From ₹1000',
-  //         imageUrl: '/men.png'
-  //       },
-  //       {
-  //         label: 'Women',
-  //         description: 'PREMIUM SUNGLASSES\nStarting From ₹2700',
-  //         imageUrl: '/women.png'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: 'Our Top Picks',
-  //     items: ['Best Seller', 'New Arrivals', 'Power Sunglasses']
-  //   },
-  //   {
-  //     title: 'Shape',
-  //     items: ['Aviator', 'Rounders', 'Wayfarer', 'Rectangle', 'Hexagon', 'Cat-Eye', 'Clubmaster']
-  //   },
-  //   {
-  //     title: 'Collection',
-  //     items: [
-  //       'Maverick',
-  //       'Fashion Essentials',
-  //       'Aerodynamics',
-  //       'Petite Sunglasses',
-  //       'Havana',
-  //       'Wedding Edit',
-  //       'Holiday Edit',
-  //       'Pilot'
-  //     ]
-  //   }
-  // ];
+  const dropdownSections = [
+    {
+      title: 'SELECT CATEGORY',
+      isCategory: true,
+      items: [
+        {
+          label: 'Men',
+          description: 'CLASSIC SUNGLASSES\nStarting From ₹1000',
+          imageUrl: '/images/men_pic.webp'
+        },
+        {
+          label: 'Women',
+          description: 'PREMIUM SUNGLASSES\nStarting From ₹2700',
+          imageUrl: '/images/women_pic.webp'
+        }
+      ]
+    },
+    {
+      title: 'Our Top Picks',
+      items: ['Best Seller', 'New Arrivals', 'Power Sunglasses']
+    },
+    {
+      title: 'Shape',
+      items: ['Aviator', 'Rounders', 'Wayfarer', 'Rectangle', 'Hexagon', 'Cat-Eye', 'Clubmaster']
+    },
+    {
+      title: 'Collection',
+      items: [
+        'Maverick',
+        'Fashion Essentials',
+        'Aerodynamics',
+        'Petite Sunglasses',
+        'Havana',
+        'Wedding Edit',
+        'Holiday Edit',
+        'Pilot'
+      ]
+    }
+  ];
 
   return (
     <div className="bg-white text-black">
@@ -68,9 +70,9 @@ const Submenu = () => {
           {menuItems.map((item) => (
             <li
               key={item.name}
-              className="relative group h-16 flex items-center"
-              // onMouseEnter={() => handleMouseEnter(item.name)}
-              //   onMouseLeave={handleMouseLeave}
+              className="group h-16 flex items-center"
+              onMouseEnter={() => handleMouseEnter(item.name)}
+              onMouseLeave={handleMouseLeave}
             >
               <Link
                 href={`/${item.name.toLowerCase().replace(/\s+/g, '-')}`}
@@ -79,7 +81,7 @@ const Submenu = () => {
               </Link>
 
               {/* Dropdown Menu */}
-              {/* {hoveredMenu === item.name && item.name === 'SUNGLASSES' && <Menu sections={dropdownSections} />} */}
+              {hoveredMenu === item.name && item.name === 'SUNGLASSES' && <Menu sections={dropdownSections} />}
             </li>
           ))}
         </ul>
