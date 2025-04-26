@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useAppSelector } from '../../../../store';
+import { useAppSelector } from '../../../store';
 import ProductCard from '../../Card/ProductCard';
 
 const FeaturedProductCards = () => {

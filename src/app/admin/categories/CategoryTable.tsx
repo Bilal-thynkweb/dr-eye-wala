@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Eye, MoreVertical, Trash2 } from "lucide-react";
-import { Category } from "./types";
+import { Category } from "@/types/category";
 
 interface CategoryTableProps {
   categories: Category[];
@@ -42,7 +42,7 @@ export function CategoryTable({
         <TableHeader>
           <TableRow>
             <TableHead className="w-[250px]">Name</TableHead>
-            <TableHead>Parent</TableHead>
+            <TableHead>Display Order</TableHead>
             <TableHead>Products</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -55,10 +55,11 @@ export function CategoryTable({
                 <TableCell className="font-medium">
                   <CategoryNameCell category={category} />
                 </TableCell>
-                <TableCell>{getParentName(category.parentId)}</TableCell>
-                <TableCell>{category.productsCount} products</TableCell>
+                <TableCell>{category.display_order}</TableCell>
+                <TableCell>{category.productCount} products</TableCell>
                 <TableCell>
-                  <StatusBadge isActive={category.isActive} />
+                  {/* <StatusBadge isActive={'category.isActive'} /> */}
+                  <StatusBadge isActive={true} />
                 </TableCell>
                 <TableCell className="text-right">
                   <CategoryActions

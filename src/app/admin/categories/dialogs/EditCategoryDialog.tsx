@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Category } from "../types";
+import { Category } from "@/types/category";
 import { CategoryFormFields } from "./CategoryFormFields";
 
 interface EditCategoryDialogProps {

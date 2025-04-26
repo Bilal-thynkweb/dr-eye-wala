@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Image } from "lucide-react";
-import { Category } from "../types";
+import { Category } from "@/types/category";
 
 interface CategoryDialogProps {
   isOpen: boolean;
@@ -38,7 +38,7 @@ export function CategoryDialog({
     name: "",
     slug: "",
     description: "",
-    parentId: null,
+    parent_id: null,
     isActive: true,
     imageUrl: "/images/categories/placeholder.jpg",
   };
@@ -92,7 +92,7 @@ export function CategoryDialog({
 
   // Filter out current category from parent options (to prevent self-reference)
   const parentOptions = categories.filter(cat => 
-    cat.parentId === null && (!isEditMode || cat.id !== category?.id)
+    cat.parent_id === null && (!isEditMode || cat.id !== category?.id)
   );
 
   return (
@@ -153,7 +153,7 @@ export function CategoryDialog({
             <select
               id="category-parentId"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              value={formValues.parentId || ""}
+              value={formValues.parent_id || ""}
               onChange={handleInputChange}
             >
               <option value="">None (Top Level)</option>

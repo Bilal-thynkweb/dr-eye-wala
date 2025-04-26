@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Image } from "lucide-react";
-import { Category } from "../types";
+import { Category } from "@/types/category";
 
 interface CategoryFormFieldsProps {
   formValues: Partial<Category>;

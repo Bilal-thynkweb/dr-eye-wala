@@ -1,15 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import userReducer from '../src/features/user';
-import productReducer from '../src/features/products';
-
-// Import your reducers here
-// import counterReducer from './slices/counterSlice';
-// import userReducer from './slices/userSlice';
+import categoryReducer from '@/store/slices/categorySlice';
+import { cacheReducer } from '@/store/slices/cacheSlice';
+import { categoryApi } from '@/store/services/categories';
 
 const rootReducers = combineReducers({
-  user: userReducer,
-  products: productReducer
+  categories: categoryReducer,
+  cache: cacheReducer,
+  [categoryApi.reducerPath]: categoryApi.reducer
 });
 
 export const store = configureStore({
@@ -19,7 +17,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['HYDRATE']
       }
-    }),
+    }).concat(categoryApi.middleware),
   // Optional: Add middleware or configure devtools
   devTools: process.env.NODE_ENV !== 'production'
 });

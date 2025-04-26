@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Image } from "lucide-react";
-import { Category } from "../types";
+import { Category } from "@/types/category";
 import { CategoryFormFields } from "./CategoryFormFields";
 
 interface AddCategoryDialogProps {

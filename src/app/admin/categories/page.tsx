@@ -1,6 +1,6 @@
 'use client';
 // CategoryManagement.tsx - Updated implementation with common dialog
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,7 +15,10 @@ import { Search, PlusCircle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CategoryTable } from "./CategoryTable";
 import { CategoryDialog } from "./dialogs/CategoryDialog";
-import { Category } from "./types";
+import { Category } from "@/types/category";
+import { useAddCategoryMutation, useGetAllCategoriesQuery } from "@/store/services/categories";
+import { useSupabaseQuery } from "@/store/supabaseQuery/useSupabaseQuery/useSupabaseQuery";
+import { createClient } from "@/utils/supabase/client";
 
 // Sample data
 const sampleCategories: Category[] = [
@@ -83,13 +86,15 @@ export default function CategoryManagement() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
 
-  // Filter categories based on search term and active status
-  const filteredCategories = categories.filter(
-    (category) =>
-      category.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!showActiveOnly || category.isActive)
-  );
+  const { data = [], error: fetchError, isLoading: isFetching } = useGetAllCategoriesQuery('');
+  const [addCategory, { isLoading: isAdding, isSuccess, isError, error: addError }] = useAddCategoryMutation();
 
+  // Filter categories based on search term and active status
+  const filteredCategories = data.filter(
+    (category) =>
+      category?.name?.toLowerCase().includes(searchTerm.toLowerCase()) 
+    // && (!showActiveOnly || category.isActive)
+  );
   // Get parent category name by ID
   const getParentName = (parentId: string | null) => {
     if (!parentId) return "—";
@@ -118,29 +123,7 @@ export default function CategoryManagement() {
 
   // Save category (handles both add and edit)
   const handleSaveCategory = (categoryData: Partial<Category>) => {
-    if (currentCategory) {
-      // Edit existing category
-      setCategories(
-        categories.map((cat) =>
-          cat.id === currentCategory.id ? { ...cat, ...categoryData } : cat
-        )
-      );
-    } else {
-      // Add new category
-      const newCategory: Category = {
-        id: `${categories.length + 1}`,
-        name: categoryData.name || "",
-        slug: categoryData.slug || categoryData.name?.toLowerCase().replace(/\s+/g, "-") || "",
-        description: categoryData.description || "",
-        parentId: categoryData.parentId,
-        isActive: categoryData.isActive || true,
-        imageUrl: categoryData.imageUrl || "/images/categories/placeholder.jpg",
-        productsCount: 0,
-        createdAt: new Date().toISOString(),
-      };
-      
-      setCategories([...categories, newCategory]);
-    }
+    
     
     setIsDialogOpen(false);
     setCurrentCategory(null);
@@ -169,7 +152,7 @@ export default function CategoryManagement() {
         <CardHeader className="pb-2">
           <CardTitle>Categories</CardTitle>
           <CardDescription>
-            You have {categories.length} categories in total.
+            You have {filteredCategories.length} categories in total.
           </CardDescription>
         </CardHeader>
         <CardContent>
